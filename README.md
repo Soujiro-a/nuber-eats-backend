@@ -12,6 +12,8 @@
 - Node.js
 - Nest.js
 - GraphQL
+- TypeORM
+- PostgreSQL
 
 ## :hammer: 3. ERD 설계
 
