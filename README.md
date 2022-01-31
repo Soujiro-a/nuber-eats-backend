@@ -17,7 +17,31 @@
 
 ## :hammer: 3. ERD 설계
 
-- ERD 설계 한 결과 사진 넣기
+<details>
+<summary>User</summary>
+<div markdown="1">
+
+### User Entity
+
+- id
+- createdAt
+- updatedAt
+- email
+- password
+- role(client|owner|delivery)
+
+### User CRUD:
+
+- Create Account
+- Log In
+- See Profile
+- Edit Profile
+- Verify Email
+
+:pushpin: 코드 첨부
+
+</div>
+</details>
 
 ## :dart: 4. 핵심 기능
 
