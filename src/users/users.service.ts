@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { sign } from 'jsonwebtoken';
 import { CreateAccountInput } from './dtos/create-account-dto';
 import { LoginInput } from './dtos/login.dto';
 import { User } from './entities/user.entity';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from 'src/jwt/jwt.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
+    private readonly jwt: JwtService,
   ) {}
 
   async createAccount({
@@ -57,9 +61,10 @@ export class UsersService {
         };
       }
       // JWT 만들고 user에게 주기(*)
+      const token = this.jwt.sign({ id: user.id });
       return {
         ok: true,
-        token: 'token test',
+        token,
       };
     } catch (error) {
       return {
