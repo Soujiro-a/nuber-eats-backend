@@ -14,6 +14,7 @@
 - GraphQL
 - TypeORM
 - PostgreSQL
+- jsonwebtoken
 
 ## :hammer: 3. ERD 설계
 
@@ -30,22 +31,36 @@
 - password
 - role(client|owner|delivery)
 
-### User CRUD:
+</div>
+</details>
 
-- Create Account
-- Log In
-- See Profile
-- Edit Profile
-- Verify Email
+## :dart: 4. 구현 기능
 
-:pushpin: 코드 첨부
+<details>
+<summary>Configuration</summary>
+<div markdown="1">
+
+- [NestJS ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L18)
+- [TypeORM ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L35)
+- [GraphQL ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L46)
+- [Create jsonwebtoken middleware](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/jwt/jwt.middleware.ts#L7)
+- [Use jsonwebtoken middleware for '/graphql' routes, POST Method](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L60)
 
 </div>
 </details>
 
-## :dart: 4. 핵심 기능
+<details>
+<summary>User CRUD</summary>
+<div markdown="1">
 
-- 구현하는데 있어서 중요한 핵심 기능 작성하기
+- [Create Account](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L16)
+- [Log In](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L40)
+- See Profile
+- Edit Profile
+- Verify Email
+
+</div>
+</details>
 
 ## :rotating_light: 5. 트러블 슈팅
 
