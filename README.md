@@ -56,7 +56,7 @@
 - [Create Account](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L16)
 - [Log In](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L40)
 - [See Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/d73665896abeb2681b1716322f096bcd1ad057b6/src/users/users.resolver.ts#L52)
-- Edit Profile
+- [Edit Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/2f113d1c89355ea0a7cb12cf4f401b05835d6f51/src/users/users.resolver.ts#L75)
 - Verify Email
 
 </div>
@@ -65,14 +65,15 @@
 ## :rotating_light: 5. 트러블 슈팅
 
 <details>
-<summary>트러블 명</summary>
+<summary>프로필 수정 문제</summary>
 <div markdown="1">
 
-```
-이곳에 에러 상세 표기
-```
+- 처음엔 userId, email, password를 입력받고 typeORM의 update 메소드를 이용해 유저 프로필을 수정하려고 했음
+- 그러나, User entity의 비밀번호 해싱함수에 BeforeUpdate hook을 사용해도 비밀번호가 해싱되지 않는 문제가 발생
+- update 메소드는 update query만 실행하기 떄문에, hook을 사용할 수 없는 문제가 있다는 걸 알았음
+- 결과적으로, findOne 메소드로 userId를 통해 특정 user를 찾고, email과 password를 선택적으로 입력받았을 경우를 대비해 undefined가 아닌 경우에만 정보를 덮어씌우고 해당 유저를 save해주는 방식으로 변경하였음
 
-:pushpin: 코드 첨부
+:pushpin: [코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/2f113d1c89355ea0a7cb12cf4f401b05835d6f51/src/users/users.service.ts#L80)
 
 </div>
 </details>
