@@ -94,3 +94,58 @@
 
 </div>
 </details>
+
+<details>
+<summary>유닛 테스팅 파일 경로 에러 문제</summary>
+<div markdown="1">
+
+```
+Cannot find module 'src/common/entities/core.entity' from 'users/entities/user.entity.ts'
+
+    Require stack:
+      users/entities/user.entity.ts
+      users/users.service.ts
+      users/users.service.spec.ts
+
+       5 |   registerEnumType,
+       6 | } from '@nestjs/graphql';
+    >  7 | import { CoreEntity } from 'src/common/entities/core.entity';
+         | ^
+       8 | import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+       9 | import * as bcrypt from 'bcrypt';
+      10 | import { InternalServerErrorException } from '@nestjs/common';
+
+      at Resolver.resolveModule (../node_modules/jest-resolve/build/resolver.js:324:11)
+      at Object.<anonymous> (users/entities/user.entity.ts:7:1)
+```
+
+- TypeScript를 쓰고 있어서, 쓰고싶은 함수를 자동으로 import해주면서 절대 경로로 표기를 하는데, Jest에서는 절대 경로로 표기하면 제대로 경로를 찾아가지 못함
+- package.json에 작성되어있는 Jest 설정에서 파일을 찾는 방식을 바꿔줘야함
+
+[코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/7cd138f71e450c25a05c74b7f1a330c4d2e80e2c/package.json#L73)
+
+</div>
+</details>
+
+<details>
+<summary>UserService 유닛 테스팅 Dependency 문제</summary>
+<div markdown="1">
+
+```
+    Nest can't resolve dependencies of the UserService (?, VerificationRepository, JwtService, MailService). Please make sure that the argument UserRepository at index [0] is available in the RootTestModule context.
+
+    Potential solutions:
+    - If UserRepository is a provider, is it part of the current RootTestModule?
+    - If UserRepository is exported from a separate @Module, is that module imported within RootTestModule?
+      @Module({
+        imports: [ /* the Module containing UserRepository */ ]
+      })
+```
+
+- 유닛 테스트 과정에서 Repository를 제공하지 않아서 생기는 문제
+- 실제 Repository를 그대로 쓸 수는 없기 때문에(써서도 안됨), 가짜함수, 클래스, Repository(Mocking)를 만들어 제공
+
+[코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/7cd138f71e450c25a05c74b7f1a330c4d2e80e2c/src/users/users.service.spec.ts#L9)
+
+</div>
+</details>
