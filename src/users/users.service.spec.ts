@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { JwtService } from 'src/jwt/jwt.service';
 import { MailService } from 'src/mail/mail.service';
+import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
 import { UserService } from './users.service';
@@ -22,8 +23,11 @@ const mockMailService = {
   sendVerificationEmail: jest.fn(),
 };
 
+type mockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+
 describe('UserService', () => {
   let service: UserService;
+  let usersRepository: mockRepository<User>;
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
@@ -48,13 +52,30 @@ describe('UserService', () => {
       ],
     }).compile();
     service = module.get<UserService>(UserService);
+    usersRepository = module.get(getRepositoryToken(User));
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it.todo('createAccount');
+  describe('createAccount', () => {
+    it('should fail if user exists', async () => {
+      usersRepository.findOne.mockResolvedValue({
+        id: 1,
+        email: 'asdf@asdf.com',
+      });
+      const result = await service.createAccount({
+        email: '',
+        password: '',
+        role: 0,
+      });
+      expect(result).toMatchObject({
+        ok: false,
+        error: '해당 이메일을 가진 사용자가 이미 존재합니다.',
+      });
+    });
+  });
   it.todo('login');
   it.todo('findById');
   it.todo('editProfile');
