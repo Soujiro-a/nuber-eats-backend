@@ -310,5 +310,55 @@ describe('UserService', () => {
       });
     });
   });
-  it.todo('verifyEmail');
+  describe('verifyEmail', () => {
+    it('이메일 인증에 성공합니다.', async () => {
+      const mockedVerification = {
+        user: {
+          verified: false,
+        },
+        id: 1,
+      };
+      verificationsRepository.findOne.mockResolvedValue(mockedVerification);
+
+      const result = await service.verifyEmail('');
+
+      expect(verificationsRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(verificationsRepository.findOne).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.any(Object),
+      );
+
+      expect(usersRepository.save).toHaveBeenCalledTimes(1);
+      expect(usersRepository.save).toHaveBeenCalledWith({ verified: true });
+
+      expect(verificationsRepository.delete).toHaveBeenCalledTimes(1);
+      expect(verificationsRepository.delete).toHaveBeenCalledWith(
+        mockedVerification.id,
+      );
+
+      expect(result).toMatchObject({
+        ok: true,
+      });
+    });
+    it('인증 코드가 유효하지 않다면 인증에 실패합니다.', async () => {
+      verificationsRepository.findOne.mockResolvedValue(undefined);
+
+      const result = await service.verifyEmail('');
+
+      expect(result).toMatchObject({
+        ok: false,
+        error: '인증정보를 찾을 수 없습니다.',
+      });
+    });
+    it('예외가 발생했다면 인증에 실패합니다.', async () => {
+      verificationsRepository.findOne.mockRejectedValue(new Error());
+
+      const result = await service.verifyEmail('');
+
+      expect(result).toMatchObject({
+        ok: false,
+        error: Error(),
+      });
+    });
+  });
 });
