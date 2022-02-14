@@ -9,6 +9,7 @@ import { UserService } from './users.service';
 
 const mockRepository = () => ({
   findOne: jest.fn(),
+  findOneOrFail: jest.fn(),
   save: jest.fn(),
   create: jest.fn(),
   delete: jest.fn(),
@@ -185,11 +186,28 @@ describe('UserService', () => {
       usersRepository.findOne.mockRejectedValue(new Error());
 
       const result = await service.login(loginArgs);
-      console.log(result);
       expect(result).toMatchObject({ ok: false, error: Error() });
     });
   });
-  it.todo('findById');
+  describe('findById', () => {
+    it('존재하는 유저를 찾습니다.', async () => {
+      const findByIdArgs = {
+        id: 1,
+      };
+      usersRepository.findOneOrFail.mockResolvedValue(findByIdArgs);
+      const result = await service.findById(1);
+      expect(result).toMatchObject({ ok: true, user: findByIdArgs });
+    });
+
+    it('입력받은 id를 가진 유저를 찾는데 실패합니다.', async () => {
+      usersRepository.findOneOrFail.mockRejectedValue(new Error());
+      const result = await service.findById(1);
+      expect(result).toMatchObject({
+        ok: false,
+        error: '입력받은 id에 해당하는 유저를 찾을 수 없습니다.',
+      });
+    });
+  });
   it.todo('editProfile');
   it.todo('verifyEmail');
 });
