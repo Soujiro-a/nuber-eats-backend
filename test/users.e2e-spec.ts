@@ -242,7 +242,55 @@ describe('UserModule (e2e)', () => {
         });
     });
   });
-  it.todo('me');
-  it.todo('verifyEmail');
+  describe('me', () => {
+    it('프로필 정보를 찾습니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .set('X-JWT', jwtToken)
+        .send({
+          query: `
+        {
+          me {
+            email
+          }
+      }
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              data: {
+                me: { email },
+              },
+            },
+          } = res;
+          expect(email).toEqual(testUser.email);
+        });
+    });
+    it('로그인 정보가 없을 경우 프로필 정보를 받아올 수 없습니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .send({
+          query: `
+        {
+          me {
+            email
+          }
+      }
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              errors: [{ message }],
+            },
+          } = res;
+          expect(message).toBe('Forbidden resource');
+        });
+    });
+  });
   it.todo('editProfile');
+  it.todo('verifyEmail');
 });
