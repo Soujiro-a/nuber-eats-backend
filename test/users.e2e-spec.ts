@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import { getConnection, Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Verification } from 'src/users/entities/verification.entity';
 
 jest.mock('got', () => {
   return {
@@ -22,6 +23,7 @@ const testUser = {
 describe('UserModule (e2e)', () => {
   let app: INestApplication;
   let usersRepository: Repository<User>;
+  let verificationRepository: Repository<Verification>;
   let jwtToken: string;
 
   beforeAll(async () => {
@@ -31,6 +33,9 @@ describe('UserModule (e2e)', () => {
 
     app = module.createNestApplication();
     usersRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    verificationRepository = module.get<Repository<Verification>>(
+      getRepositoryToken(Verification),
+    );
     await app.init();
   });
 
@@ -291,6 +296,123 @@ describe('UserModule (e2e)', () => {
         });
     });
   });
-  it.todo('editProfile');
-  it.todo('verifyEmail');
+  describe('editProfile', () => {
+    const NEW_EMAIL = 'edit@account.com';
+    it('이메일을 변경합니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .set('X-JWT', jwtToken)
+        .send({
+          query: `
+        mutation {
+          editProfile(input:{
+            email:"${NEW_EMAIL}"
+          }) {
+            ok
+            error
+          }
+        }
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              data: {
+                editProfile: { ok, error },
+              },
+            },
+          } = res;
+          expect(ok).toBeTruthy();
+          expect(error).toBeNull();
+        });
+    });
+    it('새 이메일 주소로 변경되었는지 확인합니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .set('X-JWT', jwtToken)
+        .send({
+          query: `
+        {
+          me {
+            email
+          }
+      }
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              data: {
+                me: { email },
+              },
+            },
+          } = res;
+          expect(email).toEqual(NEW_EMAIL);
+        });
+    });
+  });
+  describe('verifyEmail', () => {
+    let verificationCode: string;
+    beforeAll(async () => {
+      const [verification] = await verificationRepository.find();
+      verificationCode = verification.code;
+    });
+
+    it('이메일 인증을 진행합니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .send({
+          query: `
+        mutation{
+          verifyEmail(input:{
+            code:"${verificationCode}"
+          }) {
+            ok
+            error
+          }}
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              data: {
+                verifyEmail: { ok, error },
+              },
+            },
+          } = res;
+          expect(ok).toBeTruthy();
+          expect(error).toBeNull();
+        });
+    });
+    it('잘못된 인증코드를 입력하여 이메일 인증에 실패합니다.', () => {
+      return request(app.getHttpServer())
+        .post(GRAPHQL_ENDPOINT)
+        .send({
+          query: `
+        mutation{
+          verifyEmail(input:{
+            code:"WRONG_CODE"
+          }) {
+            ok
+            error
+          }}
+        `,
+        })
+        .expect(200)
+        .expect((res) => {
+          const {
+            body: {
+              data: {
+                verifyEmail: { ok, error },
+              },
+            },
+          } = res;
+          expect(ok).toBeFalsy();
+          expect(error).toEqual('인증정보를 찾을 수 없습니다.');
+        });
+    });
+  });
 });
