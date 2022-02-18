@@ -74,6 +74,15 @@
 </div>
 </details>
 
+<details>
+<summary>E2E Test</summary>
+<div markdown="1">
+
+- [User Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/users.e2e-spec.ts)
+
+</div>
+</details>
+
 ## :rotating_light: 5. 트러블 슈팅
 
 <details>
@@ -158,6 +167,21 @@ Cannot find module 'src/common/entities/core.entity' from 'users/entities/user.e
 - 실제 Repository를 그대로 쓸 수는 없기 때문에(써서도 안됨), 가짜함수, 클래스, Repository(Mocking)를 만들어 제공
 
 [코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/7cd138f71e450c25a05c74b7f1a330c4d2e80e2c/src/users/users.service.spec.ts#L9)
+
+</div>
+</details>
+
+<details>
+<summary>editProfile E2E Test 문제</summary>
+<div markdown="1">
+
+> QueryFailedError: duplicate key value violates unique constraint "REL_8300048608d8721aea27747b07"
+
+- 각 user당 하나의 verification만 만들 수 있도록 typeORM의 관계설정을 해놓은 상태 [코드 확인](https://github.com/Soujiro-a/nuber-eats-backend/blob/7ad8af837324fc7aa9e23add427ff6823443b046/src/users/entities/verification.entity.ts#L15)
+- 해당 E2E 테스트에서 현재 verification가 존재하는 상태에서 editProfile mutation을 통해 동일 한 userId를 가진 verification column을 하나 더 만들려고하여 발생한 오류
+- editProfile 함수내에 새 이메일을 변경하는 과정에서 기존 verification을 삭제하는 코드를 추가하여 해당 에러가 발생하지 않도록 하였음
+
+[코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/b6b0d26b3f4cd9961ea41a2409a71a976d35e69f/src/users/users.service.ts#L125)
 
 </div>
 </details>
