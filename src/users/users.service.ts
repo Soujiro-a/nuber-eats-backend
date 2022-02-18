@@ -113,8 +113,16 @@ export class UserService {
     try {
       const user = await this.users.findOne(userId);
       if (email) {
+        const existUser = await this.users.findOne({ email });
+        if (existUser) {
+          return {
+            ok: false,
+            error: '해당 이메일을 가진 유저가 이미 존재합니다.',
+          };
+        }
         user.email = email;
         user.verified = false;
+        await this.verifications.delete({ user: { id: userId } });
         const verification = await this.verifications.save(
           this.verifications.create({ user }),
         );
