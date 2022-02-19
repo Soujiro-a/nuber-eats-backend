@@ -23,14 +23,24 @@
 <summary>User</summary>
 <div markdown="1">
 
-### User Entity
-
 - id
 - createdAt
 - updatedAt
 - email
 - password
 - role(client|owner|delivery)
+
+</div>
+</details>
+
+<details>
+<summary>Restaurant</summary>
+<div markdown="1">
+
+- name
+- category
+- address
+- coverImage
 
 </div>
 </details>
@@ -182,6 +192,20 @@ Cannot find module 'src/common/entities/core.entity' from 'users/entities/user.e
 - editProfile 함수내에 새 이메일을 변경하는 과정에서 기존 verification을 삭제하는 코드를 추가하여 해당 에러가 발생하지 않도록 하였음
 
 [코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/b6b0d26b3f4cd9961ea41a2409a71a976d35e69f/src/users/users.service.ts#L125)
+
+</div>
+</details>
+
+<details>
+<summary>Schema Type 인식 문제</summary>
+<div markdown="1">
+
+> Error: Cannot determine a GraphQL input type ("Restaurant") for the "restaurants". Make sure your class is decorated with an appropriate decorator.
+
+- appModule에 Restaurant Module을 통해 특정 스키마의 InputType, ObjectType을 가져오려고 할 때, 이름을 명시해주지 않아 같은 이름으로 스키마로 표시하려고 해서 발생한 문제다
+- 두 Type이 같은 이름을 가지고 있었기 때문에, InputType에 다른 이름을 할당해주어 다른 스키마로 표시되게 함으로서 오류를 해결할 수 있었다.
+
+[코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/8c2598c0131d235903e0cff446104683ca3e12e4/src/restaurants/entities/restaurant.entity.ts#L8)
 
 </div>
 </details>
