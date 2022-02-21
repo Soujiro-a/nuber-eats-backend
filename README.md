@@ -56,15 +56,11 @@
 - [GraphQL ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L46)
 - [Create jsonwebtoken middleware](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/jwt/jwt.middleware.ts#L7)
 - [Use jsonwebtoken middleware for '/graphql' routes, POST Method](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L60)
-- Config Role
+- Config Role Based Authorization
 
-  - authentication
-
-    - [Create Role Decorator]()
-
-  - authorization
-    - [Guard ConfigModule]()
-    - [Use Role Decorator in Resolver if need authorizaion]()
+  - [Create Role Decorator](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/auth/role.decorator.ts)
+  - [Guard ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c47c6fbeb859bb6095fd212f895b131fe1f70717/src/app.module.ts#L68)
+  - [Use Role Decorator in Resolver if need authorizaion](https://github.com/Soujiro-a/nuber-eats-backend/blob/c47c6fbeb859bb6095fd212f895b131fe1f70717/src/users/users.resolver.ts#L38)
 
 </div>
 </details>
