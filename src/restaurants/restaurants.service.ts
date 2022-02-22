@@ -7,6 +7,10 @@ import {
   CreateRestaurantOutput,
 } from './dtos/create-restaurant.dto';
 import {
+  DeleteRestaurantInput,
+  DeleteRestaurantOutput,
+} from './dtos/delete-restaurant.dto';
+import {
   EditRestaurantInput,
   EditRestaurantOutput,
 } from './dtos/edit-restaurant.dto';
@@ -89,6 +93,40 @@ export class RestaurantService {
       return {
         ok: false,
         error: '음식점 정보를 수정할 수 없습니다.',
+      };
+    }
+  }
+
+  async deleteRestaurant(
+    owner: User,
+    { restaurantId }: DeleteRestaurantInput,
+  ): Promise<DeleteRestaurantOutput> {
+    try {
+      const restaurant = await this.restaurants.findOne(restaurantId);
+
+      if (!restaurant) {
+        return {
+          ok: false,
+          error: '음식점을 찾을 수 없습니다.',
+        };
+      }
+
+      if (owner.id !== restaurant.ownerId) {
+        return {
+          ok: false,
+          error:
+            '해당 음식점의 오너가 아니면 음식점 정보를 삭제할 수 없습니다.',
+        };
+      }
+      await this.restaurants.delete(restaurantId);
+
+      return {
+        ok: true,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: '음식점을 삭제할 수 없습니다.',
       };
     }
   }
