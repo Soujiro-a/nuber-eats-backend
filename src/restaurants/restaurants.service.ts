@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { AllCategoriesOutput } from './dtos/all-categories.dto';
+import { CategoryInput, CategoryOutput } from './dtos/category.dto';
 import {
   CreateRestaurantInput,
   CreateRestaurantOutput,
@@ -149,5 +150,40 @@ export class RestaurantService {
 
   countRestaurants(category: Category): Promise<number> {
     return this.restaurants.count({ category });
+  }
+
+  async findCategoryBySlug({
+    slug,
+    page,
+  }: CategoryInput): Promise<CategoryOutput> {
+    try {
+      const category = await this.categories.findOne({ slug });
+
+      if (!category) {
+        return {
+          ok: false,
+          error: '카테고리를 찾을 수 없습니다.',
+        };
+      }
+      const restaurants = await this.restaurants.find({
+        where: {
+          category,
+        },
+        take: 25,
+        skip: (page - 1) * 25,
+      });
+      category.restaurants = restaurants;
+      const totalResults = await this.countRestaurants(category);
+      return {
+        ok: true,
+        category,
+        totalPages: Math.ceil(totalResults / 25),
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: '카테고리를 불러올 수 없습니다.',
+      };
+    }
   }
 }
