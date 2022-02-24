@@ -45,6 +45,19 @@
 </div>
 </details>
 
+<details>
+<summary>Dish</summary>
+<div markdown="1">
+
+- name
+- price
+- coverImage
+- detail
+- volume
+
+</div>
+</details>
+
 ## :dart: 4. 구현 기능
 
 <details>
@@ -74,6 +87,51 @@
 - [See Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/d73665896abeb2681b1716322f096bcd1ad057b6/src/users/users.resolver.ts#L52)
 - [Edit Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/2f113d1c89355ea0a7cb12cf4f401b05835d6f51/src/users/users.resolver.ts#L75)
 - [Verify Email](https://github.com/Soujiro-a/nuber-eats-backend/blob/2d323c1358f3f408afada866f1040f324dac358a/src/users/users.service.ts#L109)
+
+</div>
+</details>
+
+</div>
+</details>
+
+<details>
+<summary>Restaurant CRUD</summary>
+<div markdown="1">
+
+- [Create Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L29)
+- [Edit Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L52)
+- [Delete Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L100)
+- [See Categories](https://github.com/Soujiro-a/nuber-eats-backend/blob/93ddb5293cd1ec4f17dc64cc50bd407546e32b5f/src/restaurants/restaurants.service.ts#L135)
+- [See Restaurants](https://github.com/Soujiro-a/nuber-eats-backend/blob/56c16c43bd6216c46f854b66f6146882933a31ff/src/restaurants/restaurants.service.ts#L193)
+- [See Restaurants by Category](https://github.com/Soujiro-a/nuber-eats-backend/blob/bc9c2b7eb26803ea1d8c6bd59ef11bdfecaecb66/src/restaurants/restaurants.service.ts#L155)
+- [See Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/3748a476a97f5abae8da005f5d521bae427b6842/src/restaurants/restaurants.service.ts#L214)
+- [Search Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/ee33fe1146958a7efae981b40c5e67768f10797e/src/restaurants/restaurants.service.ts#L243)
+
+</div>
+</details>
+
+</div>
+</details>
+
+<details>
+<summary>Dish CRUD</summary>
+<div markdown="1">
+
+- [Create Dish]()
+- [Edit Dish]()
+- [Delete Dish]()
+
+</div>
+</details>
+
+<details>
+<summary>Orders CRUD</summary>
+<div markdown="1">
+
+- [Create Orders]()
+- [Edit Orders]()
+- [Delete Orders]()
+- [Orders SUbscription]()
 
 </div>
 </details>
