@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
-import { ILike, Raw, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { AllCategoriesOutput } from './dtos/all-categories.dto';
 import { CategoryInput, CategoryOutput } from './dtos/category.dto';
 import {
@@ -51,7 +51,7 @@ export class RestaurantService {
       return {
         ok: true,
       };
-    } catch (error) {
+    } catch {
       return {
         ok: false,
         error: '음식점을 생성할 수 없었습니다.',
@@ -99,7 +99,7 @@ export class RestaurantService {
       return {
         ok: true,
       };
-    } catch (error) {
+    } catch {
       return {
         ok: false,
         error: '음식점 정보를 수정할 수 없습니다.',
@@ -133,7 +133,7 @@ export class RestaurantService {
       return {
         ok: true,
       };
-    } catch (error) {
+    } catch {
       return {
         ok: false,
         error: '음식점을 삭제할 수 없습니다.',
@@ -148,7 +148,7 @@ export class RestaurantService {
         ok: true,
         categories,
       };
-    } catch (error) {
+    } catch {
       return {
         ok: false,
         error: '카테고리를 불러올 수 없습니다.',
@@ -187,7 +187,7 @@ export class RestaurantService {
         totalPages: Math.ceil(totalResults / TAKE_COUNT_IN_PAGE),
         restaurants,
       };
-    } catch (error) {
+    } catch {
       return {
         ok: false,
         error: '카테고리를 불러올 수 없습니다.',
