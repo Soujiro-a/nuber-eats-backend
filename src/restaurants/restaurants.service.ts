@@ -16,9 +16,12 @@ import {
   EditRestaurantInput,
   EditRestaurantOutput,
 } from './dtos/edit-restaurant.dto';
+import { RestaurantsInput, RestaurantsOutput } from './dtos/restaurants.dto';
 import { Category } from './entities/category.entity';
 import { Restaurant } from './entities/restaurant.entity';
 import { CategoryRepository } from './repositories/category.repository';
+
+const TAKE_COUNT_IN_PAGE = 25;
 
 @Injectable()
 export class RestaurantService {
@@ -169,20 +172,40 @@ export class RestaurantService {
         where: {
           category,
         },
-        take: 25,
-        skip: (page - 1) * 25,
+        take: TAKE_COUNT_IN_PAGE,
+        skip: (page - 1) * TAKE_COUNT_IN_PAGE,
       });
-      category.restaurants = restaurants;
       const totalResults = await this.countRestaurants(category);
       return {
         ok: true,
         category,
-        totalPages: Math.ceil(totalResults / 25),
+        totalPages: Math.ceil(totalResults / TAKE_COUNT_IN_PAGE),
+        restaurants,
       };
     } catch (error) {
       return {
         ok: false,
         error: '카테고리를 불러올 수 없습니다.',
+      };
+    }
+  }
+
+  async allRestaurants({ page }: RestaurantsInput): Promise<RestaurantsOutput> {
+    try {
+      const [restaurants, totalResults] = await this.restaurants.findAndCount({
+        skip: (page - 1) * TAKE_COUNT_IN_PAGE,
+        take: TAKE_COUNT_IN_PAGE,
+      });
+      return {
+        ok: true,
+        results: restaurants,
+        totalPages: Math.ceil(totalResults / TAKE_COUNT_IN_PAGE),
+        totalResults,
+      };
+    } catch {
+      return {
+        ok: false,
+        error: '음식점들을 불러올 수 없습니다.',
       };
     }
   }

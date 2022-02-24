@@ -11,4 +11,7 @@ export class PagenationInput {
 export class PagenationOutput extends CoreOutput {
   @Field(() => Int, { nullable: true })
   totalPages?: number;
+
+  @Field(() => Int, { nullable: true })
+  totalResults?: number;
 }
