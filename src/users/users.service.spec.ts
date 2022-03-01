@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { JwtService } from 'src/jwt/jwt.service';
 import { MailService } from 'src/mail/mail.service';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User, UserRole } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
 import { UserService } from './users.service';
 
@@ -70,7 +70,7 @@ describe('UserService', () => {
     const createAccountArgs = {
       email: 'create@account.com',
       password: '1234',
-      role: 0,
+      role: UserRole.Client,
     };
     it('사용자가 있는 경우 새 유저 생성에 실패합니다.', async () => {
       usersRepository.findOne.mockResolvedValue({
@@ -229,17 +229,28 @@ describe('UserService', () => {
         email: editProfileArgs.input.email,
       };
 
-      usersRepository.findOne.mockResolvedValue(oldUser);
+      usersRepository.findOne.mockResolvedValueOnce(oldUser);
+      usersRepository.findOne.mockResolvedValueOnce(undefined);
 
       verificationsRepository.create.mockReturnValue(newVerification);
       verificationsRepository.save.mockResolvedValue(newVerification);
 
       await service.editProfile(editProfileArgs.userId, editProfileArgs.input);
 
-      expect(usersRepository.findOne).toHaveBeenCalledTimes(1);
+      expect(usersRepository.findOne).toHaveBeenCalledTimes(2);
       expect(usersRepository.findOne).toHaveBeenCalledWith(
         editProfileArgs.userId,
       );
+      expect(usersRepository.findOne).toHaveBeenCalledWith({
+        email: editProfileArgs.input.email,
+      });
+
+      expect(verificationsRepository.delete).toHaveBeenCalledTimes(1);
+      expect(verificationsRepository.delete).toHaveBeenCalledWith({
+        user: {
+          id: editProfileArgs.userId,
+        },
+      });
 
       expect(verificationsRepository.create).toHaveBeenCalledTimes(1);
       expect(verificationsRepository.create).toHaveBeenCalledWith({
@@ -288,6 +299,35 @@ describe('UserService', () => {
 
       expect(result).toMatchObject({
         ok: true,
+      });
+    });
+
+    it('중복된 이메일이 있어 이메일 변경에 실패합니다.', async () => {
+      const existUser = {
+        email: 'exist@account.com',
+        verified: true,
+      };
+
+      const editProfileArgs = {
+        userId: 1,
+        input: { email: 'exist@account.com' },
+      };
+
+      usersRepository.findOne.mockResolvedValue(existUser);
+
+      const result = await service.editProfile(
+        editProfileArgs.userId,
+        editProfileArgs.input,
+      );
+
+      expect(usersRepository.findOne).toHaveBeenCalledTimes(2);
+      expect(usersRepository.findOne).toHaveBeenCalledWith(
+        editProfileArgs.userId,
+      );
+
+      expect(result).toMatchObject({
+        ok: false,
+        error: '해당 이메일을 가진 유저가 이미 존재합니다.',
       });
     });
 
