@@ -232,7 +232,7 @@ export class RestaurantService {
       if (!restaurant) {
         return {
           ok: false,
-          error: '음식점을 찾을 수 없습니다.',
+          error: '음식점이 존재하지 않습니다.',
         };
       }
 
