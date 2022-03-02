@@ -9,7 +9,7 @@ import { OrderItem } from './entities/order-item.entity';
 import { Orders } from './entities/order.entity';
 
 @Injectable()
-export class OrdersService {
+export class OrderService {
   constructor(
     @InjectRepository(Orders)
     private readonly orders: Repository<Orders>,

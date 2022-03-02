@@ -4,11 +4,11 @@ import { Role } from 'src/auth/role.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { CreateOrderInput, CreateOrderOutput } from './dtos/create-order.dto';
 import { Orders } from './entities/order.entity';
-import { OrdersService } from './orders.service';
+import { OrderService } from './orders.service';
 
 @Resolver(() => Orders)
 export class OrdersResolver {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(private readonly ordersService: OrderService) {}
 
   @Mutation(() => CreateOrderOutput)
   @Role(['Client'])
