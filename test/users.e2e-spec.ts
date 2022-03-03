@@ -30,6 +30,7 @@ describe('UserModule (e2e)', () => {
   const publicTest = (query: string) => baseTest().send({ query });
   const privateTest = (query: string) =>
     baseTest().set('X-JWT', jwtToken).send({ query });
+
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -45,7 +46,7 @@ describe('UserModule (e2e)', () => {
 
   afterAll(async () => {
     await getConnection().dropDatabase();
-    app.close();
+    await app.close();
   });
 
   describe('createAccount', () => {
