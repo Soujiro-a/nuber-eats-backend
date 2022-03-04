@@ -51,9 +51,9 @@
 
 - name
 - price
-- coverImage
-- detail
-- volume
+- photo
+- description
+- options
 
 </div>
 </details>
@@ -117,9 +117,9 @@
 <summary>Dish CRUD</summary>
 <div markdown="1">
 
-- [Create Dish]()
-- [Edit Dish]()
-- [Delete Dish]()
+- [Create Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/abe087d6fee10419964522fba8b19662dbc30037/src/restaurants/restaurants.service.ts#L276)
+- [Edit Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/0aa5c1cb5e77c3496967be62939a61099a112eaa/src/restaurants/restaurants.service.ts#L314)
+- [Delete Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/0aa5c1cb5e77c3496967be62939a61099a112eaa/src/restaurants/restaurants.service.ts#L354)
 
 </div>
 </details>
@@ -128,7 +128,7 @@
 <summary>Orders CRUD</summary>
 <div markdown="1">
 
-- [Create Orders]()
+- [Create Orders](https://github.com/Soujiro-a/nuber-eats-backend/blob/330719db55cd5e81e7983dc8e636504c0b7e1417/src/orders/orders.service.ts#L24)
 - [Edit Orders]()
 - [Delete Orders]()
 - [Orders SUbscription]()
@@ -143,6 +143,8 @@
 - [User Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/users/users.service.spec.ts)
 - [Mail Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/mail/mail.service.spec.ts)
 - [JWT Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/jwt/jwt.service.spec.ts)
+- [Restaurant Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/restaurants/restaurants.service.spec.ts)
+- [Order Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/orders/orders.service.spec.ts)
 
 </div>
 </details>
@@ -152,6 +154,7 @@
 <div markdown="1">
 
 - [User Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/users.e2e-spec.ts)
+- [Restaurant Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/restaurants.e2e-spec.ts)
 
 </div>
 </details>
@@ -269,6 +272,33 @@ Cannot find module 'src/common/entities/core.entity' from 'users/entities/user.e
 - 두 Type이 같은 이름을 가지고 있었기 때문에, InputType에 다른 이름을 할당해주어 다른 스키마로 표시되게 함으로서 오류를 해결할 수 있었다.
 
 [코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/8c2598c0131d235903e0cff446104683ca3e12e4/src/restaurants/entities/restaurant.entity.ts#L8)
+
+</div>
+</details>
+
+<details>
+<summary>E2E Test Connection Error</summary>
+<div markdown="1">
+
+> AlreadyHasActiveConnectionError: Cannot create a new connection named "default", because connection with such name already exist and it now has an active connection session.
+
+- 중복 커넥션때문에 발생하는 문제
+- 해당 프로젝트의 경우, e2e 테스트 코드의 AfterAll에서 app을 close할 때 비동기 처리를 해주지 않아 첫 테스트의 app이 닫히지 않아, 두번째 테스트부터 해당 에러가 발생하였다
+- 문제에 나와있듯이, app.close를 비동기 처리해줌으로서 해결할 수 있었다.
+
+</div>
+</details>
+
+<details>
+<summary>E2E Test Connection Error</summary>
+<div markdown="1">
+
+> QueryFailedError: duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+
+- e2e 테스트 파일이 여러개일 때, 기본적으로 병렬로 실행하기 때문에, 동시에 테이블을 생성하며 오류가 발생
+- Jest CLI 옵션 중, [runInBand](https://jestjs.io/docs/cli#--runinband)를 추가해주면 모든 테스트를 직렬로 실행하도록 변경할 수 있음
+
+[참고한 링크](https://github.com/typeorm/typeorm/issues/6125)
 
 </div>
 </details>
