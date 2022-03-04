@@ -135,22 +135,18 @@ describe('UserModule (e2e)', () => {
     });
 
     it('잘못된 방법으로 로그인에 실패합니다.', () => {
-      return request(app.getHttpServer())
-        .post(GRAPHQL_ENDPOINT)
-        .send({
-          query: `
-        mutation {
-          login(input:{
-            email:"${testUser.email}",
-            password:"WRONG_PASSWORD"
-          }) {
-            ok
-            token
-            error
-          }
+      return publicTest(`
+      mutation {
+        login(input:{
+          email:"${testUser.email}",
+          password:"WRONG_PASSWORD"
+        }) {
+          ok
+          token
+          error
         }
-        `,
-        })
+      }
+      `)
         .expect(200)
         .expect((res) => {
           const {
