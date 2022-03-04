@@ -191,6 +191,7 @@ export class RestaurantService {
         ok: true,
         category,
         totalPages: Math.ceil(totalResults / TAKE_COUNT_IN_PAGE),
+        totalResults,
         restaurants,
       };
     } catch {
@@ -323,7 +324,7 @@ export class RestaurantService {
       if (!dish) {
         return {
           ok: false,
-          error: '지우고자하는 메뉴가 존재하지 않습니다.',
+          error: '수정하고자 하는 메뉴가 존재하지 않습니다.',
         };
       }
 
