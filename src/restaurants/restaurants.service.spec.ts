@@ -729,7 +729,7 @@ describe('RestaurantService', () => {
 
       expect(result).toMatchObject({
         ok: false,
-        error: '지우고자하는 메뉴가 존재하지 않습니다.',
+        error: '수정하고자 하는 메뉴가 존재하지 않습니다.',
       });
     });
     it('음식점의 주인이 아니라면 메뉴 정보를 수정할 수 없습니다.', async () => {

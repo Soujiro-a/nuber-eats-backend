@@ -5,7 +5,7 @@ import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { OrderItem } from './entities/order-item.entity';
-import { Orders } from './entities/order.entity';
+import { Order } from './entities/order.entity';
 import { OrderService } from './orders.service';
 
 const mockRepository = () => ({
@@ -22,7 +22,7 @@ type mockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
 describe('OrderService', () => {
   let service: OrderService;
-  let ordersRepository: mockRepository<Orders>;
+  let ordersRepository: mockRepository<Order>;
   let restaurantsRepository: mockRepository<Restaurant>;
   let orderItemRepository: mockRepository<OrderItem>;
   let dishesRepository: mockRepository<Dish>;
@@ -32,7 +32,7 @@ describe('OrderService', () => {
       providers: [
         OrderService,
         {
-          provide: getRepositoryToken(Orders),
+          provide: getRepositoryToken(Order),
           useValue: mockRepository(),
         },
         {
@@ -50,7 +50,7 @@ describe('OrderService', () => {
       ],
     }).compile();
     service = module.get<OrderService>(OrderService);
-    ordersRepository = module.get(getRepositoryToken(Orders));
+    ordersRepository = module.get(getRepositoryToken(Order));
     restaurantsRepository = module.get(getRepositoryToken(Restaurant));
     orderItemRepository = module.get(getRepositoryToken(OrderItem));
     dishesRepository = module.get(getRepositoryToken(Dish));
@@ -161,7 +161,7 @@ describe('OrderService', () => {
       orderItemRepository.save.mockResolvedValueOnce(orderItem(1));
       orderItemRepository.save.mockResolvedValueOnce(orderItem(2));
 
-      const orders = new Orders();
+      const orders = new Order();
       ordersRepository.create.mockReturnValue(orders);
 
       const result = await service.createOrder(customer, createOrderArgs);

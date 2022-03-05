@@ -3,10 +3,10 @@ import { AuthUser } from 'src/auth/auth-user.decorator';
 import { Role } from 'src/auth/role.decorator';
 import { User } from 'src/users/entities/user.entity';
 import { CreateOrderInput, CreateOrderOutput } from './dtos/create-order.dto';
-import { Orders } from './entities/order.entity';
+import { Order } from './entities/order.entity';
 import { OrderService } from './orders.service';
 
-@Resolver(() => Orders)
+@Resolver(() => Order)
 export class OrdersResolver {
   constructor(private readonly ordersService: OrderService) {}
 

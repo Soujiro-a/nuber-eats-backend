@@ -24,7 +24,7 @@ registerEnumType(OrderStatus, { name: 'OrderStatus' });
 @InputType('OrderInputType', { isAbstract: true })
 @ObjectType()
 @Entity()
-export class Orders extends CoreEntity {
+export class Order extends CoreEntity {
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.orders, {
     onDelete: 'SET NULL',

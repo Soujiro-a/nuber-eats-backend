@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { OrderService } from './orders.service';
 import { OrdersResolver } from './orders.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Orders } from './entities/order.entity';
+import { Order } from './entities/order.entity';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { Dish } from 'src/restaurants/entities/dish.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Orders, Restaurant, OrderItem, Dish])],
+  imports: [TypeOrmModule.forFeature([Order, Restaurant, OrderItem, Dish])],
   providers: [OrderService, OrdersResolver],
 })
 export class OrdersModule {}
