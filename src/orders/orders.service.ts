@@ -5,10 +5,11 @@ import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { User, UserRole } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderInput, CreateOrderOutput } from './dtos/create-order.dto';
+import { EditOrderInput, EditOrderOutput } from './dtos/edit-order.dto';
 import { GetOrderInput, GetOrderOutput } from './dtos/get-order.dto';
 import { GetOrdersInput, GetOrdersOutput } from './dtos/get-orders.dto';
 import { OrderItem } from './entities/order-item.entity';
-import { Order } from './entities/order.entity';
+import { Order, OrderStatus } from './entities/order.entity';
 
 @Injectable()
 export class OrderService {
@@ -137,6 +138,20 @@ export class OrderService {
     }
   }
 
+  canSeeOrder(user: User, order: Order): boolean {
+    let allowed = true;
+    if (user.role === UserRole.Client && order.customerId !== user.id) {
+      allowed = false;
+    }
+    if (user.role === UserRole.Delivery && order.driverId !== user.id) {
+      allowed = false;
+    }
+    if (user.role === UserRole.Owner && order.restaurant.ownerId !== user.id) {
+      allowed = false;
+    }
+    return allowed;
+  }
+
   async getOrder(
     user: User,
     { id: orderId }: GetOrderInput,
@@ -151,20 +166,7 @@ export class OrderService {
           error: '주문을 찾을 수 없습니다.',
         };
       }
-      let allowed = true;
-      if (user.role === UserRole.Client && order.customerId !== user.id) {
-        allowed = false;
-      }
-      if (user.role === UserRole.Delivery && order.driverId !== user.id) {
-        allowed = false;
-      }
-      if (
-        user.role === UserRole.Owner &&
-        order.restaurant.ownerId !== user.id
-      ) {
-        allowed = false;
-      }
-      if (!allowed) {
+      if (!this.canSeeOrder(user, order)) {
         return {
           ok: false,
           error: '해당 주문을 볼 권한이 없습니다.',
@@ -178,6 +180,60 @@ export class OrderService {
       return {
         ok: false,
         error: '주문을 불러올 수 없습니다.',
+      };
+    }
+  }
+
+  async editOrder(
+    user: User,
+    { id: orderId, status }: EditOrderInput,
+  ): Promise<EditOrderOutput> {
+    try {
+      const order = await this.orders.findOne(orderId, {
+        relations: ['restaurant'],
+      });
+      if (!order) {
+        return {
+          ok: false,
+          error: '주문을 찾을 수 없습니다.',
+        };
+      }
+      if (!this.canSeeOrder(user, order)) {
+        return {
+          ok: false,
+          error: '해당 주문을 볼 권한이 없습니다.',
+        };
+      }
+      let canEdit = true;
+      if (user.role === UserRole.Owner) {
+        if (status !== OrderStatus.Pending && status !== OrderStatus.Cooking) {
+          canEdit = false;
+        }
+      }
+      if (user.role === UserRole.Delivery) {
+        if (status !== OrderStatus.Cooked && status !== OrderStatus.PickedUp) {
+          canEdit = false;
+        }
+      }
+      if (!canEdit) {
+        return {
+          ok: false,
+          error: '해당 주문을 수정할 권한이 없습니다.',
+        };
+      }
+      await this.orders.save([
+        {
+          id: orderId,
+          status,
+        },
+      ]);
+      return {
+        ok: true,
+      };
+    } catch {
+      return {
+        ok: false,
+        error: '주문을 수정할 수 없습니다.',
       };
     }
   }
