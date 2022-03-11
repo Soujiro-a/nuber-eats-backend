@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import {
   CreatePaymentInput,
   CreatePaymentOutput,
@@ -43,6 +44,11 @@ export class PaymentService {
           restaurant,
         }),
       );
+      restaurant.isPromoted = true;
+      const date = new Date();
+      date.setDate(date.getDate() + 7);
+      restaurant.promotedUntil = date;
+      await this.restaurants.save(restaurant);
       return {
         ok: true,
       };
@@ -67,5 +73,19 @@ export class PaymentService {
         error: '결제 목록을 불러올 수 없습니다.',
       };
     }
+  }
+
+  @Cron('* * 0 * *')
+  async checkPromotedRestaurants() {
+    const restaurants = await this.restaurants.find({
+      isPromoted: true,
+      promotedUntil: LessThan(new Date()),
+    });
+    console.log(restaurants);
+    restaurants.forEach(async (restaurant) => {
+      restaurant.isPromoted = false;
+      restaurant.promotedUntil = null;
+      await this.restaurants.save(restaurant);
+    });
   }
 }
