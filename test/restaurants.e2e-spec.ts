@@ -44,6 +44,34 @@ const tempEditRestaurantArgs = {
   address: 'TempEdit Address',
 };
 
+const testDish = {
+  name: 'Test Dish',
+  price: 12000,
+  description: 'Testing Menu',
+  options: [
+    {
+      name: 'spice Level',
+      choices: [
+        { name: 'Little bit' },
+        { name: 'Medium' },
+        { name: 'Kill me' },
+      ],
+    },
+    {
+      name: 'source',
+      extra: 1000,
+    },
+    {
+      name: 'Size',
+      choices: [
+        { name: 'X', extra: 1000 },
+        { name: 'L', extra: 2000 },
+        { name: 'XL', extra: 3000 },
+      ],
+    },
+  ],
+};
+
 describe('RestaurantModule (e2e)', () => {
   let app: INestApplication;
   let restaurantsRepository: Repository<Restaurant>;
@@ -856,31 +884,31 @@ describe('RestaurantModule (e2e)', () => {
       return privateTest(
         jwtToken,
         `
-      mutation {
-        createDish(input:{
-          restaurantId:${restaurant.id}
-          name:"Maxican Chicken"
-          price:12000,
-          description:"Delicious Chicken",
-          options: [
-            {
-              name:"spice Level", 
-              choices:[{name:"Little bit"},{name:"Medium"},{name:"Kill me"}]
-            },
-            {
-              name:"source",
-              extra:1000
-            },
-            {
-              name:"Size", 
-              choices:[{name:"X", extra:1000}, {name:"L", extra:2000}, {name:"XL", extra:3000}]
-            }
-          ]
-        }) {
-          ok
-          error
-        }
-      }`,
+        mutation {
+          createDish(input:{
+            restaurantId:${restaurant.id}
+            name:"${testDish.name}"
+            price:${testDish.price},
+            description:"${testDish.description}",
+            options: [
+              {
+                name:"${testDish.options[0].name}", 
+                choices:[{name:"${testDish.options[0].choices[0].name}"},{name:"${testDish.options[0].choices[1].name}"},{name:"${testDish.options[0].choices[2].name}"}]
+              },
+              {
+                name:"${testDish.options[1].name}",
+                extra:${testDish.options[1].extra}
+              },
+              {
+                name:"${testDish.options[2].name}", 
+                choices:[{name:"${testDish.options[2].choices[0]['name']}", extra:${testDish.options[2].choices[0]['extra']}}, {name:"${testDish.options[2].choices[1]['name']}", extra:${testDish.options[2].choices[1]['extra']}}, {name:"${testDish.options[2].choices[2]['name']}", extra:${testDish.options[2].choices[2]['extra']}}]
+              }
+            ]
+          }) {
+            ok
+            error
+          }
+        }`,
       )
         .expect(200)
         .expect(async (res) => {
