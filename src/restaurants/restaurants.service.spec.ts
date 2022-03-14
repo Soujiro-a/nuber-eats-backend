@@ -390,6 +390,9 @@ describe('RestaurantService', () => {
         },
         take: TAKE_COUNT_IN_PAGE,
         skip: (findCategoryBySlugArgs.page - 1) * TAKE_COUNT_IN_PAGE,
+        order: {
+          isPromoted: 'DESC',
+        },
       });
 
       expect(result).toMatchObject({
@@ -459,6 +462,9 @@ describe('RestaurantService', () => {
       expect(restaurantsRepository.findAndCount).toHaveBeenCalledWith({
         skip: (allRestaurantsArgs.page - 1) * TAKE_COUNT_IN_PAGE,
         take: TAKE_COUNT_IN_PAGE,
+        order: {
+          isPromoted: 'DESC',
+        },
       });
 
       expect(result).toMatchObject({

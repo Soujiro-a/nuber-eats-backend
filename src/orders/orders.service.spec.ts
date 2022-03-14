@@ -409,26 +409,68 @@ describe('OrderService', () => {
         error: '주문을 찾을 수 없습니다.',
       });
     });
-    it('주문에 접근할 권한이 없는 사람이 조회하려고 했지만 실패합니다.', async () => {
-      ordersRepository.findOne.mockResolvedValue(existOrder);
+    describe('주문에 접근할 권한이 없는 사람이 조회할 경우', () => {
+      it('Client일 경우', async () => {
+        user.role = UserRole.Client;
+        existOrder.customerId = 1;
+        ordersRepository.findOne.mockResolvedValue(existOrder);
 
-      jest.spyOn(service, 'canSeeOrder').mockImplementation(() => {
-        return false;
+        const result = await service.getOrder(user, getOrderInputArgs);
+
+        expect(ordersRepository.findOne).toHaveBeenCalledTimes(1);
+        expect(ordersRepository.findOne).toHaveBeenCalledWith(
+          getOrderInputArgs.id,
+          {
+            relations: ['restaurant'],
+          },
+        );
+
+        expect(result).toMatchObject({
+          ok: false,
+          error: '해당 주문을 볼 권한이 없습니다.',
+        });
       });
+      it('Owner일 경우', async () => {
+        user.role = UserRole.Owner;
+        existOrder.restaurant = new Restaurant();
+        existOrder.restaurant.ownerId = 1;
+        ordersRepository.findOne.mockResolvedValue(existOrder);
 
-      const result = await service.getOrder(user, getOrderInputArgs);
+        const result = await service.getOrder(user, getOrderInputArgs);
 
-      expect(ordersRepository.findOne).toHaveBeenCalledTimes(1);
-      expect(ordersRepository.findOne).toHaveBeenCalledWith(
-        getOrderInputArgs.id,
-        {
-          relations: ['restaurant'],
-        },
-      );
+        expect(ordersRepository.findOne).toHaveBeenCalledTimes(1);
+        expect(ordersRepository.findOne).toHaveBeenCalledWith(
+          getOrderInputArgs.id,
+          {
+            relations: ['restaurant'],
+          },
+        );
 
-      expect(result).toMatchObject({
-        ok: false,
-        error: '해당 주문을 볼 권한이 없습니다.',
+        expect(result).toMatchObject({
+          ok: false,
+          error: '해당 주문을 볼 권한이 없습니다.',
+        });
+      });
+      it('Delivery일 경우', async () => {
+        user.role = UserRole.Delivery;
+        existOrder.restaurant = new Restaurant();
+        existOrder.driverId = 1;
+        ordersRepository.findOne.mockResolvedValue(existOrder);
+
+        const result = await service.getOrder(user, getOrderInputArgs);
+
+        expect(ordersRepository.findOne).toHaveBeenCalledTimes(1);
+        expect(ordersRepository.findOne).toHaveBeenCalledWith(
+          getOrderInputArgs.id,
+          {
+            relations: ['restaurant'],
+          },
+        );
+
+        expect(result).toMatchObject({
+          ok: false,
+          error: '해당 주문을 볼 권한이 없습니다.',
+        });
       });
     });
     it('예외가 발생한 경우 주문을 받아올 수 없습니다.', async () => {
@@ -544,11 +586,28 @@ describe('OrderService', () => {
         error: '해당 주문을 볼 권한이 없습니다.',
       });
     });
-    it('주문을 수정할 권한이 없는 사람이 주문 정보를 수정하려고 했지만 실패합니다.', async () => {
+    it('배달원이 Cooking 상태로 정보를 수정하려고 했지만 실패합니다.', async () => {
       ordersRepository.findOne.mockResolvedValue(existOrder);
 
       editOrderInputArgs.status = OrderStatus.Cooking;
       user.role = UserRole.Delivery;
+
+      const result = await service.editOrder(user, editOrderInputArgs);
+
+      expect(ordersRepository.findOne).toHaveBeenCalledTimes(1);
+
+      expect(result).toMatchObject({
+        ok: false,
+        error: '해당 주문을 수정할 권한이 없습니다.',
+      });
+    });
+    it('음식점 주인이 Delivered 상태로 정보를 수정하려고 했지만 실패합니다.', async () => {
+      existOrder.restaurant = new Restaurant();
+      existOrder.restaurant.ownerId = user.id;
+      ordersRepository.findOne.mockResolvedValue(existOrder);
+
+      editOrderInputArgs.status = OrderStatus.Delivered;
+      user.role = UserRole.Owner;
 
       const result = await service.editOrder(user, editOrderInputArgs);
 
