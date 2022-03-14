@@ -96,6 +96,7 @@ export class OrdersResolver {
     },
   })
   @Role(['Any'])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   orderUpdates(@Args('input') orderUpdatesInput: OrderUpdatesInput) {
     return this.pubSub.asyncIterator(NEW_ORDER_UPDATE);
   }
