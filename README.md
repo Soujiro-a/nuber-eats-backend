@@ -4,7 +4,8 @@
 
 ## :calendar: 1. 제작 기간 & 참여 인원
 
-- 2022.01.26 ~
+- 2022.01.26 ~ 2022.03.15
+  - 차후 불필요한 코드를 줄이는 작업, 프론트 파트에 따른 백엔드 파트 수정이 있을 예정
 - 개인 프로젝트
 
 ## :computer: 2. 사용 기술
@@ -16,6 +17,7 @@
 - PostgreSQL
 - jsonwebtoken
 - Jest
+- paddle(payments) (현재 사용중이지 않음)
 
 ## :hammer: 3. ERD 설계
 
@@ -27,8 +29,26 @@
 - createdAt
 - updatedAt
 - email
-- password
-- role(client|owner|delivery)
+- password (hashed)
+- role (client|owner|delivery)
+- verified
+- restaurants
+- orders
+- rides
+- payments
+
+</div>
+</details>
+
+<details>
+<summary>Verification</summary>
+<div markdown="1">
+
+- id
+- createdAt
+- updatedAt
+- code
+- user
 
 </div>
 </details>
@@ -37,10 +57,33 @@
 <summary>Restaurant</summary>
 <div markdown="1">
 
+- id
+- createdAt
+- updatedAt
 - name
-- category
 - address
+- category
 - coverImage
+- owner
+- menu
+- orders
+- isPromoted
+- promotedUntil
+
+</div>
+</details>
+
+<details>
+<summary>Category</summary>
+<div markdown="1">
+
+- id
+- createdAt
+- updatedAt
+- name
+- coverImage
+- slug
+- restaurants
 
 </div>
 </details>
@@ -49,11 +92,39 @@
 <summary>Dish</summary>
 <div markdown="1">
 
+- id
+- createdAt
+- updatedAt
 - name
 - price
 - photo
 - description
 - options
+- restaurant
+
+</div>
+</details>
+
+<details>
+<summary>Order</summary>
+<div markdown="1">
+
+- customer
+- driver
+- items
+- total
+- status
+
+</div>
+</details>
+
+<details>
+<summary>Payment</summary>
+<div markdown="1">
+
+- transactionId
+- user
+- restaurant
 
 </div>
 </details>
@@ -125,13 +196,35 @@
 </details>
 
 <details>
-<summary>Orders CRUD</summary>
+<summary>Order CRUD</summary>
 <div markdown="1">
 
-- [Create Orders](https://github.com/Soujiro-a/nuber-eats-backend/blob/330719db55cd5e81e7983dc8e636504c0b7e1417/src/orders/orders.service.ts#L24)
-- [Edit Orders]()
-- [Delete Orders]()
-- [Orders SUbscription]()
+- [Create Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/330719db55cd5e81e7983dc8e636504c0b7e1417/src/orders/orders.service.ts#L24)
+- [Read Orders](https://github.com/Soujiro-a/nuber-eats-backend/blob/870943e2eed2cd42877ddd5bb2fa20fb1b9b52c9/src/orders/orders.service.ts#L96)
+- [Read Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/870943e2eed2cd42877ddd5bb2fa20fb1b9b52c9/src/orders/orders.service.ts#L140)
+- [Edit Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/acf196abb1501b82b2e17cf9d891f19d998c38f1/src/orders/orders.service.ts#L187)
+
+</div>
+</details>
+
+<details>
+<summary>Order Subscription</summary>
+<div markdown="1">
+
+- [Pending Orders to Owner](https://github.com/Soujiro-a/nuber-eats-backend/blob/4ac58568a962b931ee170d8b6f1681b333d81eec/src/orders/orders.resolver.ts#L58)
+- [Update Order Status](https://github.com/Soujiro-a/nuber-eats-backend/blob/c2b40ccfc4beed69e366579801cdb0b8f1553e55/src/orders/orders.resolver.ts#L81)
+- [Pending Pickup Order to Delivery](https://github.com/Soujiro-a/nuber-eats-backend/blob/7f64aee3659d39f7605f2ae38078980339d2e79b/src/orders/orders.service.ts#L265)
+
+</div>
+</details>
+
+<details>
+<summary>Payments</summary>
+<div markdown="1">
+
+- [Create Payment (Promote Restaurant)](https://github.com/Soujiro-a/nuber-eats-backend/blob/a96f57fbaa70ba71d21777bb219c6a145439165d/src/payments/payments.service.ts#L20)
+- [Read Payment](https://github.com/Soujiro-a/nuber-eats-backend/blob/a27935572cbcda41ae4a128cd4649e6ac5bad4d1/src/payments/payments.service.ts#L57)
+- [Unpromoting Restaurants](https://github.com/Soujiro-a/nuber-eats-backend/blob/312298d5f822c741375dd847a485508b5754cc0b/src/payments/payments.service.ts#L79)
 
 </div>
 </details>
@@ -140,11 +233,14 @@
 <summary>Unit Test</summary>
 <div markdown="1">
 
+![Unit Test Coverage](https://user-images.githubusercontent.com/68040092/158137463-cad1e00b-6ec3-4267-8623-1d3db93319cd.png)
+
 - [User Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/users/users.service.spec.ts)
 - [Mail Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/mail/mail.service.spec.ts)
 - [JWT Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/jwt/jwt.service.spec.ts)
 - [Restaurant Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/restaurants/restaurants.service.spec.ts)
 - [Order Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/orders/orders.service.spec.ts)
+- [Payments Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/payments/payments.service.spec.ts)
 
 </div>
 </details>
@@ -155,6 +251,8 @@
 
 - [User Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/users.e2e-spec.ts)
 - [Restaurant Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/restaurants.e2e-spec.ts)
+- [Order Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/orders.e2e-spec.ts)
+- [Payment Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/payments.e2e-spec.ts)
 
 </div>
 </details>
@@ -299,6 +397,36 @@ Cannot find module 'src/common/entities/core.entity' from 'users/entities/user.e
 - Jest CLI 옵션 중, [runInBand](https://jestjs.io/docs/cli#--runinband)를 추가해주면 모든 테스트를 직렬로 실행하도록 변경할 수 있음
 
 [참고한 링크](https://github.com/typeorm/typeorm/issues/6125)
+
+</div>
+</details>
+
+<details>
+<summary>Subscription할 때 Context의 Connection이 undefined로 나오는 문제</summary>
+<div markdown="1">
+
+- 처음에는 installSubscriptionHandlers 옵션을 true로 하고 context에서 connection 값을 가져오려고 했다.
+- 그러나, connection 값이 undefined로 잡히며 처음에 사용하고자 했던 방법을 사용할 수 없게 되었다.
+- Nestjs 공식 문서에 있는 GraphQL의 [Subscription 파트](https://docs.nestjs.com/graphql/subscriptions)에서는 installSubscriptionHandlers 옵션을 true로 설정하는 방법이 최신 버전에서는 사용되지 않고, 다른 방법을 사용하라는 경고문을 보았다.
+
+- 해당 경고문 하단에는 subscriptions 옵션에서 graphql-ws 패키지를 true로 설정하라는 방법이 나와있어서 해당 방법을 사용해보려고 했는데 아래와 같은 메시지가 콘솔에 나왔다.
+
+  > WebSocket protocol error occured. It was most likely caused due to an unsupported subprotocol "graphql-ws" requested by the client. graphql-ws implements exclusively the "graphql-transport-ws" subprotocol, please make sure that the client implements it too.
+
+- 번역기의 도움(..)을 받아보니, graphql-ws는 클라이언트에서 지원하지 않는 graphql-transport-ws의 하위 프로토콜을 단독으로 생성하니 확인해보라는 이야기였다.
+- 해당 메시지만 나오고 결과값을 받아보기위한 console.log도 제대로 동작하지 않아서, graphql-ws 패키지를 true로 설정하라는 방법으로는 못할 것 같아 다른 방법이 없나 물색해보았다.
+
+- 그러다 문득 눈에 들어온 게, 공식문서에 있는 힌트문이었다.
+  > You can also use both packages (subscriptions-transport-ws and graphql-ws) at the same time, for example, for backward compatibility.
+- graphql-transport-ws 패키지도 graphql-ws 패키지와 똑같이 설정할 수 있는게 아닐까 싶어 true로 설정해보았지만 실패했다.
+- 이후, 각 패키지의 공식문서를 찾아보다가, 문득 해당 옵션들의 인터페이스를 파고 들어가다보면 무언가 있지 않을까해서 살펴보기 시작했다.
+- 그러다 GraphQLModule 옵션의 인터페이스에서 두 패키지를 설정할 때 사용가능한 서버옵션들을 찾게되었다.
+- 그 중에서, 나는 처음에 연결할 때 토큰 값을 넘겨주고 싶은 것이었기 때문에 변수명으로 봤을 때 알맞을 것 같은 onConnect 옵션을 사용해보기로 하였다.
+- 해당 옵션은 함수 형태로 사용해야된다고해서 찾아보던 와중, [graphql-transpost-ws의 npm 문서](https://www.npmjs.com/package/subscriptions-transport-ws)에서 onConnect 옵션을 찾았다.
+- 그래서 첫번째 인자를 받아, console.log로 첫번째 인자값을 보니, http headers에 설정한 값이 그대로 콘솔에 나왔다.
+- 결과적으로, http를 사용할 때 뿐 아니라, subscriptions 사용을 위한 WebSocket을 시작할 때도 토큰 값을 담아 guard에 보내도록 설정할 수 있었다.
+
+[코드 첨부](https://github.com/Soujiro-a/nuber-eats-backend/blob/5fa77611e46748a6cdd6fd729599042660217ea7/src/app.module.ts#L64)
 
 </div>
 </details>
