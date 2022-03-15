@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Restaurant } from 'src/restaurants/entities/restaurant.entity';
 import { User } from 'src/users/entities/user.entity';
-import { LessThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreatePaymentInput } from './dtos/create-payment.dto';
 import { Payment } from './entities/payment.entity';
 import { PaymentService } from './payments.service';
