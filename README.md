@@ -135,16 +135,15 @@
 <summary>Configuration</summary>
 <div markdown="1">
 
-- [NestJS ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L18)
-- [TypeORM ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L35)
-- [GraphQL ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L46)
-- [Create jsonwebtoken middleware](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/jwt/jwt.middleware.ts#L7)
-- [Use jsonwebtoken middleware for '/graphql' routes, POST Method](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/app.module.ts#L60)
+- [NestJS ConfigModule](https://bit.ly/36iGBpI)
+- [TypeORM ConfigModule](https://bit.ly/3JeR8kD)
+- [GraphQL ConfigModule](https://bit.ly/3t9plw5)
+- [Create jsonwebtoken middleware](https://bit.ly/3q6NBNw) (current not used)
+- [Use jsonwebtoken middleware for '/graphql' routes, POST Method](https://bit.ly/3MRQGe2) (current not used)
 - Config Role Based Authorization
 
-  - [Create Role Decorator](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/auth/role.decorator.ts)
-  - [Guard ConfigModule](https://github.com/Soujiro-a/nuber-eats-backend/blob/c47c6fbeb859bb6095fd212f895b131fe1f70717/src/app.module.ts#L68)
-  - [Use Role Decorator in Resolver if need authorizaion](https://github.com/Soujiro-a/nuber-eats-backend/blob/c47c6fbeb859bb6095fd212f895b131fe1f70717/src/users/users.resolver.ts#L38)
+  - [Create Role Decorator](https://bit.ly/3q4eNg1)
+  - [Use Role Decorator in Resolver if need authorizaion](https://bit.ly/3CFuzTA)
 
 </div>
 </details>
@@ -153,14 +152,11 @@
 <summary>User CRUD</summary>
 <div markdown="1">
 
-- [Create Account](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L16)
-- [Log In](https://github.com/Soujiro-a/nuber-eats-backend/blob/c5fd08624ead654a1960e8dbdb982ef91fb19b3e/src/users/users.service.ts#L40)
-- [See Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/d73665896abeb2681b1716322f096bcd1ad057b6/src/users/users.resolver.ts#L52)
-- [Edit Profile](https://github.com/Soujiro-a/nuber-eats-backend/blob/2f113d1c89355ea0a7cb12cf4f401b05835d6f51/src/users/users.resolver.ts#L75)
-- [Verify Email](https://github.com/Soujiro-a/nuber-eats-backend/blob/2d323c1358f3f408afada866f1040f324dac358a/src/users/users.service.ts#L109)
-
-</div>
-</details>
+- [Create Account](https://bit.ly/3CWk0vL)
+- [Log In](https://bit.ly/3JbumKn)
+- [See Profile](https://bit.ly/3N0QF7Y)
+- [Edit Profile](https://bit.ly/3wn7YdB)
+- [Verify Email](https://bit.ly/3KKttsI)
 
 </div>
 </details>
@@ -169,17 +165,14 @@
 <summary>Restaurant CRUD</summary>
 <div markdown="1">
 
-- [Create Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L29)
-- [Edit Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L52)
-- [Delete Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/aa6009c6070c20bef4e97611499f69e9348e8afd/src/restaurants/restaurants.service.ts#L100)
-- [See Categories](https://github.com/Soujiro-a/nuber-eats-backend/blob/93ddb5293cd1ec4f17dc64cc50bd407546e32b5f/src/restaurants/restaurants.service.ts#L135)
-- [See Restaurants](https://github.com/Soujiro-a/nuber-eats-backend/blob/56c16c43bd6216c46f854b66f6146882933a31ff/src/restaurants/restaurants.service.ts#L193)
-- [See Restaurants by Category](https://github.com/Soujiro-a/nuber-eats-backend/blob/bc9c2b7eb26803ea1d8c6bd59ef11bdfecaecb66/src/restaurants/restaurants.service.ts#L155)
-- [See Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/3748a476a97f5abae8da005f5d521bae427b6842/src/restaurants/restaurants.service.ts#L214)
-- [Search Restaurant](https://github.com/Soujiro-a/nuber-eats-backend/blob/ee33fe1146958a7efae981b40c5e67768f10797e/src/restaurants/restaurants.service.ts#L243)
-
-</div>
-</details>
+- [Create Restaurant](https://bit.ly/3t7xcdM)
+- [Edit Restaurant](https://bit.ly/3tZVNjJ)
+- [Delete Restaurant](https://bit.ly/3Ib2kNU)
+- [See Categories](https://bit.ly/3tWzgof)
+- [See Restaurants](https://bit.ly/3wnabFV)
+- [See Restaurants by Category](https://bit.ly/3MSDrtS)
+- [See Restaurant](https://bit.ly/36jP5Nj)
+- [Search Restaurant](https://bit.ly/3JcyfPl)
 
 </div>
 </details>
@@ -188,9 +181,9 @@
 <summary>Dish CRUD</summary>
 <div markdown="1">
 
-- [Create Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/abe087d6fee10419964522fba8b19662dbc30037/src/restaurants/restaurants.service.ts#L276)
-- [Edit Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/0aa5c1cb5e77c3496967be62939a61099a112eaa/src/restaurants/restaurants.service.ts#L314)
-- [Delete Dish](https://github.com/Soujiro-a/nuber-eats-backend/blob/0aa5c1cb5e77c3496967be62939a61099a112eaa/src/restaurants/restaurants.service.ts#L354)
+- [Create Dish](https://bit.ly/3JifBp5)
+- [Edit Dish](https://bit.ly/3CQp30E)
+- [Delete Dish](https://bit.ly/3icPC6o)
 
 </div>
 </details>
@@ -199,10 +192,11 @@
 <summary>Order CRUD</summary>
 <div markdown="1">
 
-- [Create Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/330719db55cd5e81e7983dc8e636504c0b7e1417/src/orders/orders.service.ts#L24)
-- [Read Orders](https://github.com/Soujiro-a/nuber-eats-backend/blob/870943e2eed2cd42877ddd5bb2fa20fb1b9b52c9/src/orders/orders.service.ts#L96)
-- [Read Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/870943e2eed2cd42877ddd5bb2fa20fb1b9b52c9/src/orders/orders.service.ts#L140)
-- [Edit Order](https://github.com/Soujiro-a/nuber-eats-backend/blob/acf196abb1501b82b2e17cf9d891f19d998c38f1/src/orders/orders.service.ts#L187)
+- [Create Order](https://bit.ly/3KLZGQ2)
+- [Read Orders](https://bit.ly/3JcpPHr)
+- [Read Order](https://bit.ly/3t7yYvs)
+- [Edit Order](https://bit.ly/3ta6Pnm)
+- [Take Order to Delivery](https://bit.ly/3wb4Cdl)
 
 </div>
 </details>
@@ -211,20 +205,20 @@
 <summary>Order Subscription</summary>
 <div markdown="1">
 
-- [Pending Orders to Owner](https://github.com/Soujiro-a/nuber-eats-backend/blob/4ac58568a962b931ee170d8b6f1681b333d81eec/src/orders/orders.resolver.ts#L58)
-- [Update Order Status](https://github.com/Soujiro-a/nuber-eats-backend/blob/c2b40ccfc4beed69e366579801cdb0b8f1553e55/src/orders/orders.resolver.ts#L81)
-- [Pending Pickup Order to Delivery](https://github.com/Soujiro-a/nuber-eats-backend/blob/7f64aee3659d39f7605f2ae38078980339d2e79b/src/orders/orders.service.ts#L265)
+- [Pending Orders to Owner](https://bit.ly/3tapXBE)
+- [Notification Cooked Status Order to Delivery](https://bit.ly/3tVVoPw)
+- [Update Order Status](https://bit.ly/3JcUl4d)
 
 </div>
 </details>
 
 <details>
-<summary>Payments</summary>
+<summary>Payment</summary>
 <div markdown="1">
 
-- [Create Payment (Promote Restaurant)](https://github.com/Soujiro-a/nuber-eats-backend/blob/a96f57fbaa70ba71d21777bb219c6a145439165d/src/payments/payments.service.ts#L20)
-- [Read Payment](https://github.com/Soujiro-a/nuber-eats-backend/blob/a27935572cbcda41ae4a128cd4649e6ac5bad4d1/src/payments/payments.service.ts#L57)
-- [Unpromoting Restaurants](https://github.com/Soujiro-a/nuber-eats-backend/blob/312298d5f822c741375dd847a485508b5754cc0b/src/payments/payments.service.ts#L79)
+- [Create Payment (Promote Restaurant)](https://bit.ly/3IaJwOH)
+- [Read Payment](https://bit.ly/3KHy5iZ)
+- [Unpromoting Restaurants](https://bit.ly/3CIe4Go)
 
 </div>
 </details>
@@ -235,12 +229,12 @@
 
 ![Unit Test Coverage](https://user-images.githubusercontent.com/68040092/158137463-cad1e00b-6ec3-4267-8623-1d3db93319cd.png)
 
-- [User Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/users/users.service.spec.ts)
-- [Mail Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/mail/mail.service.spec.ts)
-- [JWT Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/jwt/jwt.service.spec.ts)
-- [Restaurant Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/restaurants/restaurants.service.spec.ts)
-- [Order Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/orders/orders.service.spec.ts)
-- [Payments Service](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/src/payments/payments.service.spec.ts)
+- [User Service](https://bit.ly/3tZqIg6)
+- [Mail Service](https://bit.ly/3q5WrLr)
+- [JWT Service](https://bit.ly/3KM3oJs)
+- [Restaurant Service](https://bit.ly/3ugAbjB)
+- [Order Service](https://bit.ly/3I9SdJ1)
+- [Payments Service](https://bit.ly/3tYmSDX)
 
 </div>
 </details>
@@ -249,10 +243,12 @@
 <summary>E2E Test</summary>
 <div markdown="1">
 
-- [User Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/users.e2e-spec.ts)
-- [Restaurant Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/restaurants.e2e-spec.ts)
-- [Order Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/orders.e2e-spec.ts)
-- [Payment Resolver](https://github.com/Soujiro-a/nuber-eats-backend/blob/main/test/payments.e2e-spec.ts)
+nuber-eats-backend / 트러블 슈팅 / 프로필 수정 문제
+
+- [User Resolver](https://bit.ly/35VZNtK)
+- [Restaurant Resolver](https://bit.ly/3IbiAOI)
+- [Order Resolver](https://bit.ly/3Ip1I7v)
+- [Payment Resolver](https://bit.ly/3w2NiHv)
 
 </div>
 </details>
