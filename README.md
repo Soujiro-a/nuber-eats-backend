@@ -243,7 +243,15 @@
 <summary>E2E Test</summary>
 <div markdown="1">
 
-nuber-eats-backend / 트러블 슈팅 / 프로필 수정 문제
+  <details>
+  <summary>Current Test Coverage</summary>
+  <div markdown="1">
+
+![Screenshot from 2022-03-15 11-59-25](https://user-images.githubusercontent.com/68040092/158297526-b250d125-f2b7-44b5-ab47-b66fd624eb4c.png)
+![Screenshot from 2022-03-15 11-59-50](https://user-images.githubusercontent.com/68040092/158297533-95cc0bba-f6df-4194-884b-1d0cffa8de0d.png)
+
+  </div>
+  </details>
 
 - [User Resolver](https://bit.ly/35VZNtK)
 - [Restaurant Resolver](https://bit.ly/3IbiAOI)
