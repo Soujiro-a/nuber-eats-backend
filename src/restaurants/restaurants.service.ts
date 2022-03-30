@@ -30,7 +30,7 @@ import { Dish } from './entities/dish.entity';
 import { Restaurant } from './entities/restaurant.entity';
 import { CategoryRepository } from './repositories/category.repository';
 
-const TAKE_COUNT_IN_PAGE = 25;
+const TAKE_COUNT_IN_PAGE = 1;
 
 @Injectable()
 export class RestaurantService {
@@ -234,7 +234,7 @@ export class RestaurantService {
   }: RestaurantInput): Promise<RestaurantOutput> {
     try {
       const restaurant = await this.restaurants.findOne(restaurantId, {
-        relations: ['menu'],
+        relations: ['menu', 'category'],
       });
 
       if (!restaurant) {
