@@ -35,7 +35,7 @@ import { Dish } from './entities/dish.entity';
 import { Restaurant } from './entities/restaurant.entity';
 import { CategoryRepository } from './repositories/category.repository';
 
-const TAKE_COUNT_IN_PAGE = 1;
+const TAKE_COUNT_IN_PAGE = 3;
 
 @Injectable()
 export class RestaurantService {
