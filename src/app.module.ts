@@ -71,7 +71,7 @@ import { UploadsModule } from './uploads/uploads.module';
       subscriptions: {
         'subscriptions-transport-ws': {
           onConnect: (connectionParams) => {
-            return { token: connectionParams['X-JWT'] };
+            return { token: connectionParams['x-jwt'] };
           },
         },
       },
