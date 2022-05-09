@@ -79,7 +79,6 @@ import { Context } from 'apollo-server-core';
       },
       autoSchemaFile: true,
       context: ({ req, extra }) => {
-        console.log(extra);
         if (extra) {
           return { token: extra.token };
         } else {
