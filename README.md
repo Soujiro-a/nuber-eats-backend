@@ -6,6 +6,7 @@
 
 - 2022.01.26 ~ 2022.03.15
   - 차후 불필요한 코드를 줄이는 작업, 프론트 파트에 따른 백엔드 파트 수정이 있을 예정
+  - 2022.05.09 : GraphqlModule option 수정
 - 개인 프로젝트
 
 ## :computer: 2. 사용 기술
@@ -17,7 +18,6 @@
 - PostgreSQL
 - jsonwebtoken
 - Jest
-- paddle(payments) (현재 사용중이지 않음)
 
 ## :hammer: 3. ERD 설계
 
