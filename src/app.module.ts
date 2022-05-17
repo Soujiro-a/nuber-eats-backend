@@ -71,7 +71,11 @@ import { Context } from 'apollo-server-core';
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       subscriptions: {
-        'subscriptions-transport-ws': true,
+        'subscriptions-transport-ws': {
+          onConnect: (connectionParams) => {
+            return { token: connectionParams['x-jwt'] };
+          },
+        },
         'graphql-ws': {
           onConnect: (context: Context<any>) => {
             const { connectionParams, extra } = context;
