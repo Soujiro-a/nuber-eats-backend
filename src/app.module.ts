@@ -31,9 +31,9 @@ import { Context } from 'apollo-server-core';
         process.env.NODE_ENV == 'dev'
           ? '.env.development.local'
           : '.env.test.local',
-      ignoreEnvFile: process.env.NODE_ENV === 'prod',
+      ignoreEnvFile: process.env.NODE_ENV === 'production',
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(),
+        NODE_ENV: Joi.string().valid('dev', 'production', 'test').required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.string().required(),
         DB_USERNAME: Joi.string().required(),
@@ -54,9 +54,10 @@ import { Context } from 'apollo-server-core';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      synchronize: process.env.NODE_ENV !== 'prod',
+      synchronize: process.env.NODE_ENV !== 'production',
       logging:
-        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+        process.env.NODE_ENV !== 'production' &&
+        process.env.NODE_ENV !== 'test',
       entities: [
         User,
         Verification,
@@ -69,6 +70,7 @@ import { Context } from 'apollo-server-core';
       ],
     }),
     GraphQLModule.forRoot({
+      playground: process.env.NODE_ENV !== 'production',
       installSubscriptionHandlers: true,
       subscriptions: {
         'subscriptions-transport-ws': {
